@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-bold transition-colors; }
+  .btn-p { @apply bg-maroon text-white hover:bg-deep; }
+  .btn-o { @apply border border-line bg-white text-maroon hover:border-maroon; }
+  .field { @apply w-full rounded-lg border border-line bg-white px-3 py-2.5 text-sm outline-none focus:border-maroon focus:ring-2 focus:ring-copper/40; }
+  .auth-submit {
+    transition-property: transform, background-color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  .auth-submit:focus-visible { @apply outline outline-2 outline-offset-2 outline-maroon; }
+  .auth-submit:disabled { @apply cursor-wait opacity-80; }
+  .auth-password-toggle:focus-visible { @apply outline outline-2 outline-offset-1 outline-maroon; }
+  .auth-submit__spinner { @apply h-4 w-4 rounded-full border-2 border-current border-r-transparent; }
+  .selfie-camera { @apply relative overflow-hidden rounded-xl border border-line bg-ink; }
+  .selfie-camera__video { @apply block aspect-[4/3] w-full object-cover; }
+  .selfie-camera__live { @apply absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-ink/80 px-3 py-1.5 text-xs font-semibold text-white; }
+  .selfie-camera__live span { @apply h-2 w-2 rounded-full bg-red-500; }
+  .selfie-take:focus-visible { @apply outline outline-2 outline-offset-2 outline-maroon; }
+  .selfie-take { transition-property: transform, background-color; transition-duration: 150ms; transition-timing-function: cubic-bezier(0.2, 0, 0, 1); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .selfie-take:hover { transform: translateY(-1px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .selfie-take:active { transform: scale(0.96); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .auth-submit:not(:disabled):hover { transform: translateY(-1px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .auth-submit:not(:disabled):active { transform: scale(0.96); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-submit,
+  .selfie-take { transition-duration: 0ms; }
+}
