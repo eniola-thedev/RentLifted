@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 };
 
 // Runs as the page is parsed. Skips the splash after the first page of a session; otherwise hides it once the
-// page has loaded, showing it at least 500ms (no flash) and at most 2.5s. CSS also hides it at 3s if this never runs.
+// page has loaded, showing it at least 1.8s and at most about 3.5s. CSS also hides it at 4.5s if this never runs.
 const SPLASH_SCRIPT = `(function(){var d=document.documentElement;try{if(sessionStorage.getItem("rl_splash")){d.classList.add("no-splash");return}sessionStorage.setItem("rl_splash","1")}catch(e){}
-var t0=Date.now(),done=false;function hide(){if(done)return;done=true;setTimeout(function(){d.classList.add("splash-done")},Math.max(0,500-(Date.now()-t0)))}
-if(document.readyState==="complete")hide();else window.addEventListener("load",hide);setTimeout(hide,2500)})();`;
+var t0=Date.now(),done=false;function hide(){if(done)return;done=true;setTimeout(function(){d.classList.add("splash-done")},Math.max(0,1800-(Date.now()-t0)))}
+if(document.readyState==="complete")hide();else window.addEventListener("load",hide);setTimeout(hide,3500)})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
