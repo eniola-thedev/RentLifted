@@ -22,6 +22,46 @@
   .selfie-take:focus-visible { @apply outline outline-2 outline-offset-2 outline-maroon; }
   .selfie-take { transition-property: transform, background-color; transition-duration: 150ms; transition-timing-function: cubic-bezier(0.2, 0, 0, 1); }
 }
+/* ── Loading effects ─────────────────────────────────────────────── */
+
+/* Top progress bar: creeps toward 85% while loading, then fills and fades when the page arrives. */
+.nav-progress {
+  position: fixed; inset: 0 0 auto 0; z-index: 60; height: 3px;
+  background: linear-gradient(90deg, theme("colors.copper"), theme("colors.maroon"));
+  transform-origin: left; transform: scaleX(0); opacity: 0; pointer-events: none;
+}
+.nav-progress.is-loading { opacity: 1; animation: nav-progress-creep 8s cubic-bezier(0.1, 0.7, 0.2, 1) forwards; }
+.nav-progress.is-done { opacity: 0; transform: scaleX(1); transition: transform 200ms ease-out, opacity 250ms ease 150ms; }
+@keyframes nav-progress-creep { from { transform: scaleX(0); } to { transform: scaleX(0.85); } }
+
+/* Skeleton placeholders on loading pages: a soft shimmer over the cream tone. */
+.skeleton {
+  background: linear-gradient(100deg, theme("colors.cream") 30%, #f6e6dd 50%, theme("colors.cream") 70%);
+  background-size: 300% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+/* A button that submitted a form: label fades, a spinner shows, further clicks are ignored. */
+[data-pending] { position: relative; pointer-events: none; cursor: wait; }
+[data-pending] > * , [data-pending] { color: transparent !important; }
+[data-pending]::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 1rem; height: 1rem;
+  border-radius: 9999px; border: 2px solid; border-color: currentColor transparent currentColor currentColor;
+  animation: btn-spin 700ms linear infinite;
+}
+.btn-p[data-pending]::after { border-color: #fff #fff #fff transparent; }
+.btn-o[data-pending]::after, [data-pending]:not(.btn-p)::after { border-color: theme("colors.maroon") theme("colors.maroon") theme("colors.maroon") transparent; }
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the meaning, drop the movement: a still bar, still placeholders, a still spinner ring. */
+  .nav-progress.is-loading { animation: none; transform: scaleX(0.6); }
+  .nav-progress.is-done { transition: opacity 150ms; }
+  .skeleton { animation: none; }
+  [data-pending]::after { animation: none; }
+}
+
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .selfie-take:hover { transform: translateY(-1px); }
 }

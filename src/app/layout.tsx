@@ -3,6 +3,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FooterGate from "@/components/FooterGate";
+import NavProgress from "@/components/NavProgress";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "RENTLIFTED – Elevating the Way We Live",
@@ -17,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
       <body className="min-h-screen bg-white font-sans text-ink antialiased">
+        <Suspense fallback={null}><NavProgress /></Suspense>
         <Header />
         {children}
         <FooterGate><Footer /></FooterGate>
